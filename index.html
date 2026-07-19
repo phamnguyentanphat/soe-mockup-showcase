@@ -86,10 +86,10 @@
 
   *{box-sizing:border-box}
   body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased}
-  .shell{max-width:760px;margin:0 auto;padding:2.5rem 1.25rem 5rem}
+  .shell{max-width:min(1400px, 96vw);margin:0 auto;padding:2.5rem clamp(1rem, 3vw, 3rem) 5rem}
 
   .topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);margin:0 0 2rem;padding:.75rem 0}
-  .topbar-inner{max-width:760px;margin:0 auto;padding:0 1.25rem;display:flex;align-items:center;gap:.9rem}
+  .topbar-inner{max-width:min(1400px, 96vw);margin:0 auto;padding:0 clamp(1rem, 3vw, 3rem);display:flex;align-items:center;gap:.9rem}
   .topbar-label{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap}
   .topbar-track{flex:1;height:5px;border-radius:99px;background:var(--surface-2);overflow:hidden;border:1px solid var(--border)}
   .topbar-fill{height:100%;background:var(--accent);border-radius:99px;width:0%;transition:width .35s ease}
@@ -104,15 +104,16 @@
   .legend-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0}
 
   .evaluatee-field{margin-bottom:12px}
+  .fixed-value{width:100%;font-family:var(--sans);font-size:13px;padding:9px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-muted)}
   .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.75rem}
   .info-field label{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-faint);display:block;margin-bottom:5px}
   .info-field .req{color:var(--warn);text-transform:none;letter-spacing:0}
   .info-field select,.info-field input[type="text"]{width:100%;font-family:var(--sans);font-size:13px;padding:9px 10px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text)}
   .info-field select:focus-visible,.info-field input[type="text"]:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
   .info-field input[type="text"]::placeholder{color:var(--text-faint)}
-  .info-field.missing select,.info-field.missing input[type="text"]{border-color:var(--warn);background:var(--warn-bg)}
-  .info-field .field-warn{display:none;font-size:11px;color:var(--warn);margin-top:5px;font-weight:600}
-  .info-field.missing .field-warn{display:block}
+  .field-warn{display:none;font-size:11px;color:var(--warn);margin-top:5px;font-weight:600}
+  .missing .field-warn{display:block}
+  .missing select,.missing input[type="text"],.missing .open-text{border-color:var(--warn);background:var(--warn-bg)}
 
   .section-card{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--dim-color, var(--accent));border-radius:12px;padding:1.1rem 1.3rem;margin-bottom:14px;box-shadow:var(--shadow)}
   .section-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:2px}
@@ -198,32 +199,16 @@
   .radar-wrap{width:100%;display:flex;justify-content:center}
   canvas{max-width:100%}
 
-  .export-block{border-top:1px solid var(--border);margin-top:1.4rem;padding-top:1.2rem}
-  .export-title{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-faint);margin-bottom:8px}
-  .export-btns{display:flex;gap:8px;flex-wrap:wrap}
-  .export-btn{font-family:var(--sans);font-size:12.5px;font-weight:600;padding:9px 13px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:border-color .12s,background .12s}
-  .export-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
-  .export-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  .export-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-  .export-btn.primary:hover{filter:brightness(1.08);background:var(--accent)}
-  .export-btn:disabled{opacity:.6;cursor:default}
-  .export-hint{font-size:11.5px;color:var(--text-faint);margin-top:8px;line-height:1.5}
-  .export-toast{font-size:11.5px;color:var(--accent);margin-top:6px;font-weight:600;display:none}
-  .export-toast.show{display:block}
-  .copy-fallback{width:100%;margin-top:8px;font-family:var(--mono);font-size:11px;padding:8px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text-muted);resize:vertical;min-height:44px;display:none}
-  .copy-fallback.show{display:block}
+  .submit-status{border-top:1px solid var(--border);margin-top:1.4rem;padding-top:1.2rem;text-align:center;font-size:13.5px;font-weight:600}
+  .submit-status.pending{color:var(--text-muted)}
+  .submit-status.ok{color:var(--s3)}
+  .submit-status.error{color:var(--s1)}
+  .retry-btn{margin-left:8px;font-family:var(--sans);font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
+  .retry-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
 
-  .log-block{margin-top:1.4rem}
-  .log-empty{font-size:12.5px;color:var(--text-faint);font-style:italic}
-  .log-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px}
-  table.log-table{width:100%;border-collapse:collapse;font-size:12px;white-space:nowrap}
-  table.log-table th{text-align:left;font-weight:600;color:var(--text-faint);text-transform:uppercase;letter-spacing:.03em;font-size:10px;padding:8px 10px;background:var(--surface-2);border-bottom:1px solid var(--border)}
-  table.log-table td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text)}
-  table.log-table tr:last-child td{border-bottom:none}
-  table.log-table td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
-  .agg-card{margin-top:10px;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:10px 13px;font-size:12.5px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-  .agg-card b{font-family:var(--mono);font-variant-numeric:tabular-nums}
-
+  @media(min-width:900px){
+    .dim-grid{grid-template-columns:repeat(4,1fr)}
+  }
   @media(max-width:600px){
     .info-grid{grid-template-columns:1fr 1fr}
     .dim-grid{grid-template-columns:1fr}
@@ -253,18 +238,19 @@
   </div>
 
   <div class="info-field evaluatee-field" id="field-evaluatee">
-    <label>Người được đánh giá <span class="req">— bắt buộc, dùng để gộp điểm nhiều lượt chấm</span></label>
-    <input type="text" id="evaluatee" placeholder="Tên member được showcase đánh giá">
-    <div class="field-warn">⚠ Cần nhập tên member được đánh giá</div>
+    <label>Người được đánh giá</label>
+    <div class="fixed-value">phucdao</div>
+    <input type="hidden" id="evaluatee" value="phucdao">
   </div>
 
   <div class="info-grid">
-    <div class="info-field" id="field-evaluator"><label>Người đánh giá</label>
+    <div class="info-field" id="field-evaluator"><label>Người đánh giá <span class="req">— bắt buộc</span></label>
       <select id="evaluator"><option value="">— Chọn —</option><option value="kimha">kimha</option><option value="khuevo">khuevo</option><option value="linhnguyen10">linhnguyen10</option><option value="hanhvu">hanhvu</option><option value="vydiep">vydiep</option><option value="phatpham">phatpham</option><option value="nienluong">nienluong</option></select>
       <div class="field-warn">⚠ Cần chọn người đánh giá</div>
     </div>
-    <div class="info-field"><label>Cảm nhận tổng thể</label>
+    <div class="info-field" id="field-vibe"><label>Cảm nhận tổng thể <span class="req">— bắt buộc</span></label>
       <select id="vibe"><option value="">— Chọn —</option><option value="impressive">Ấn tượng — để lại dấu ấn mạnh</option><option value="interesting">Thú vị — nhớ được 1-2 điểm</option><option value="neutral">Bình thường — không có gì nổi bật</option><option value="dull">Nhạt — khó nhớ</option></select>
+      <div class="field-warn">⚠ Cần chọn cảm nhận tổng thể</div>
     </div>
   </div>
 
@@ -272,13 +258,15 @@
 
   <div class="section-card" style="border-left-color:var(--border-strong)">
     <div class="section-title" style="color:var(--text-muted);font-size:14px;margin-bottom:.9rem">Nhận xét tổng thể</div>
-    <div style="margin-bottom:14px">
-      <div class="field-label">Điểm mạnh nổi bật</div>
+    <div style="margin-bottom:14px" id="field-strengths">
+      <div class="field-label">Điểm mạnh nổi bật <span class="req" style="text-transform:none">— bắt buộc</span></div>
       <textarea class="open-text" id="strengths" placeholder="Hành vi cụ thể member làm tốt…"></textarea>
+      <div class="field-warn">⚠ Cần điền điểm mạnh nổi bật</div>
     </div>
-    <div>
-      <div class="field-label">Điểm cần cải thiện</div>
+    <div id="field-improvements">
+      <div class="field-label">Điểm cần cải thiện <span class="req" style="text-transform:none">— bắt buộc</span></div>
       <textarea class="open-text" id="improvements" placeholder="Hành vi cụ thể cần thay đổi, không chỉ nhận xét chung…"></textarea>
+      <div class="field-warn">⚠ Cần điền điểm cần cải thiện</div>
     </div>
   </div>
 
@@ -298,30 +286,7 @@
     <div class="dim-grid" id="dim-grid"></div>
     <div class="radar-wrap"><canvas id="radarChart" width="560" height="380"></canvas></div>
 
-    <div class="export-block">
-      <div class="export-title">Lưu vào Google Sheet</div>
-      <div class="export-btns">
-        <button class="export-btn primary" id="submit-sheet-btn" onclick="submitToSheet()">🚀 Gửi lại vào Google Sheet</button>
-        <button class="export-btn" onclick="copyRow()">📋 Sao chép dòng dữ liệu</button>
-        <button class="export-btn" onclick="downloadRowCsv()">⬇️ Tải file (1 dòng)</button>
-        <button class="export-btn" onclick="downloadAllCsv()">⬇️ Tải file (tất cả lượt đã nộp)</button>
-      </div>
-      <div class="export-hint">Dữ liệu được <b>tự động gửi vào Google Sheet ngay khi bấm "Xem kết quả đánh giá"</b> — không cần bấm gì thêm. Việc này chỉ hoạt động khi trang được host bên ngoài Claude và đã cấu hình Apps Script Web App (SHEET_WEBHOOK_URL). Nếu gửi tự động thất bại, dùng nút <b>Gửi lại vào Google Sheet</b> để thử lại, hoặc <b>Sao chép dòng dữ liệu</b> rồi dán thủ công vào cuối tab <b>Submissions</b>.</div>
-      <div class="export-toast" id="export-toast"></div>
-      <textarea class="copy-fallback" id="copy-fallback" readonly></textarea>
-    </div>
-
-    <div class="log-block">
-      <div class="export-title">Các lượt đã nộp trên trình duyệt này</div>
-      <div id="log-empty" class="log-empty">Chưa có lượt nộp nào.</div>
-      <div id="log-table-wrap" class="log-table-wrap" style="display:none">
-        <table class="log-table" id="log-table">
-          <thead><tr><th>Người được đánh giá</th><th>Người đánh giá</th><th class="num">Tổng điểm</th><th>Xếp loại</th></tr></thead>
-          <tbody id="log-tbody"></tbody>
-        </table>
-      </div>
-      <div id="agg-cards"></div>
-    </div>
+    <div class="submit-status" id="submit-status"></div>
   </div>
 </div>
 
@@ -502,13 +467,12 @@ function setScore(crId, val, secId) {
 
 function updateValidationBanner(){
   const missing = ALL_CR.filter(c=>scores[c.id]===undefined);
-  const evaluateeOk = !!document.getElementById('evaluatee').value.trim();
-  const evaluatorOk = !!document.getElementById('evaluator').value;
+  const infoOk = REQUIRED_INFO_FIELDS.every(f=>!!f.get(document.getElementById(f.id)));
   const banner = document.getElementById('validation-banner');
-  if(missing.length===0 && evaluateeOk && evaluatorOk){ banner.classList.remove('show'); return; }
+  if(missing.length===0 && infoOk){ banner.classList.remove('show'); return; }
   if(!banner.classList.contains('show')) return;
   const parts = [];
-  if(!evaluateeOk || !evaluatorOk) parts.push('điền tên người được đánh giá và chọn người đánh giá');
+  if(!infoOk) parts.push('điền đầy đủ thông tin bắt buộc');
   if(missing.length > 0) parts.push(`chấm nốt ${missing.length} tiêu chí còn thiếu`);
   document.getElementById('validation-text').textContent = `Vui lòng ${parts.join(' và ')} — đã đánh dấu vị trí cần bổ sung.`;
 }
@@ -602,22 +566,32 @@ const VERDICT_SUB = {
   'Xuất sắc': 'Năng lực cao — có thể lead showcase các case phức tạp và mentor người khác.',
 };
 
+const REQUIRED_INFO_FIELDS = [
+  { id:'evaluator', wrap:'field-evaluator', get:el=>el.value },
+  { id:'vibe', wrap:'field-vibe', get:el=>el.value },
+  { id:'strengths', wrap:'field-strengths', get:el=>el.value.trim() },
+  { id:'improvements', wrap:'field-improvements', get:el=>el.value.trim() },
+];
+
 function checkInfoFields(){
-  const evaluatee = document.getElementById('evaluatee').value.trim();
-  const evaluator = document.getElementById('evaluator').value;
-  const evalueeField = document.getElementById('field-evaluatee');
-  const evaluatorField = document.getElementById('field-evaluator');
-  evalueeField.classList.toggle('missing', !evaluatee);
-  evaluatorField.classList.toggle('missing', !evaluator);
-  return { ok: !!evaluatee && !!evaluator, evaluatee, evaluator };
+  let ok = true;
+  REQUIRED_INFO_FIELDS.forEach(f=>{
+    const el = document.getElementById(f.id);
+    const wrap = document.getElementById(f.wrap);
+    const filled = !!f.get(el);
+    wrap.classList.toggle('missing', !filled);
+    if(!filled) ok = false;
+  });
+  return { ok, evaluatee: document.getElementById('evaluatee').value, evaluator: document.getElementById('evaluator').value };
 }
-document.getElementById('evaluatee').addEventListener('input', ()=>{
-  if(document.getElementById('evaluatee').value.trim()) document.getElementById('field-evaluatee').classList.remove('missing');
-  updateValidationBanner();
-});
-document.getElementById('evaluator').addEventListener('change', ()=>{
-  if(document.getElementById('evaluator').value) document.getElementById('field-evaluator').classList.remove('missing');
-  updateValidationBanner();
+
+REQUIRED_INFO_FIELDS.forEach(f=>{
+  const el = document.getElementById(f.id);
+  const evt = el.tagName === 'SELECT' ? 'change' : 'input';
+  el.addEventListener(evt, ()=>{
+    if(f.get(el)) document.getElementById(f.wrap).classList.remove('missing');
+    updateValidationBanner();
+  });
 });
 
 function calcResult() {
@@ -627,11 +601,12 @@ function calcResult() {
   if(missing.length > 0 || !info.ok){
     missing.forEach(c=>document.getElementById('row-'+c.id).classList.add('missing'));
     const parts = [];
-    if(!info.ok) parts.push('điền tên người được đánh giá và chọn người đánh giá');
+    if(!info.ok) parts.push('điền đầy đủ thông tin bắt buộc');
     if(missing.length > 0) parts.push(`chấm nốt ${missing.length} tiêu chí còn thiếu`);
     document.getElementById('validation-text').textContent = `Vui lòng ${parts.join(' và ')} — đã đánh dấu vị trí cần bổ sung.`;
     document.getElementById('validation-banner').classList.add('show');
-    const target = !info.ok ? document.getElementById('field-evaluatee') : document.getElementById('row-'+missing[0].id);
+    const firstMissingInfo = REQUIRED_INFO_FIELDS.map(f=>document.getElementById(f.wrap)).find(el=>el.classList.contains('missing'));
+    const target = firstMissingInfo || document.getElementById('row-'+missing[0].id);
     target.scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
@@ -671,21 +646,12 @@ function calcResult() {
   drawRadar(document.getElementById('radarChart'), lastRadar.labels, lastRadar.values, lastRadar.colors);
 
   currentRow = buildRow(info, dimAvgs, total, tier, passed);
-  document.getElementById('copy-fallback').classList.remove('show');
-  document.getElementById('export-toast').classList.remove('show');
-  appendToLog(currentRow);
+  document.getElementById('submit-status').className = 'submit-status';
+  document.getElementById('submit-status').textContent = '';
 
   panel.scrollIntoView({behavior:'smooth',block:'start'});
   submitToSheet();
 }
-
-const CSV_HEADERS = ['Thời gian','Người đánh giá','Người được đánh giá','Cảm nhận tổng thể',
-  'D1 Requirements Mapping','D2 Product Setup','D3 Showcase Delivery','D4 Business Impact',
-  'P1 AS-IS','P2 Pain Point','P3 TO-BE',
-  'R1 Phản biện giả định','R2 Trade-off','R3 Ứng biến','R4 Objection Handling',
-  'V1 Truyền tải ngụ ý','V2 Closing & Next Step',
-  'TB Solution Design','TB Process Analysis','TB Real-time Reasoning','TB Value Comm',
-  'Tổng điểm','Xếp loại','Đạt pass','Điểm mạnh','Điểm cần cải thiện'];
 
 function buildRow(info, dimAvgs, total, tier, passed){
   const vibeSelect = document.getElementById('vibe');
@@ -702,57 +668,18 @@ function buildRow(info, dimAvgs, total, tier, passed){
   ];
 }
 
-function csvEscape(v){
-  const s = String(v ?? '');
-  return /[",\n]/.test(s) ? '"' + s.replace(/"/g,'""') + '"' : s;
-}
-function toCsvLine(row){ return row.map(csvEscape).join(','); }
-function toTsvLine(row){ return row.map(v=>String(v ?? '').replace(/\t/g,' ').replace(/\n/g,' ')).join('\t'); }
-
 let currentRow = null;
-const LOG_KEY = 'soe-showcase-eval-log';
-function loadLog(){ try{ return JSON.parse(localStorage.getItem(LOG_KEY) || '[]'); }catch(e){ return []; } }
-function saveLog(log){ localStorage.setItem(LOG_KEY, JSON.stringify(log)); }
-
-function appendToLog(row){
-  const log = loadLog();
-  log.push(row);
-  saveLog(log);
-  renderLog(log);
-}
-
-function renderLog(log){
-  const wrap = document.getElementById('log-table-wrap');
-  const empty = document.getElementById('log-empty');
-  const tbody = document.getElementById('log-tbody');
-  if(!log.length){ wrap.style.display='none'; empty.style.display='block'; document.getElementById('agg-cards').innerHTML=''; return; }
-  empty.style.display='none'; wrap.style.display='block';
-  tbody.innerHTML = log.map(r => `<tr><td>${r[2]}</td><td>${r[1]}</td><td class="num">${r[21]}</td><td>${r[22]}</td></tr>`).join('');
-
-  const byEvaluatee = {};
-  log.forEach(r=>{
-    const name = r[2] || '(chưa rõ)';
-    (byEvaluatee[name] = byEvaluatee[name] || []).push(parseFloat(r[21]));
-  });
-  const aggEl = document.getElementById('agg-cards');
-  aggEl.innerHTML = Object.entries(byEvaluatee).map(([name, vals])=>{
-    const avg = vals.reduce((a,b)=>a+b,0)/vals.length;
-    const t = rateScore(avg);
-    return `<div class="agg-card"><span>${name} — trung bình ${vals.length} lượt chấm</span><b style="color:${avg>=PASS_THRESHOLD?'var(--s3)':'var(--s1)'}">${avg.toFixed(2)} / 4.0 · ${t.label}</b></div>`;
-  }).join('');
-}
 
 async function submitToSheet(){
   if(!currentRow) return;
-  const toast = document.getElementById('export-toast');
+  const status = document.getElementById('submit-status');
   if(!SHEET_WEBHOOK_URL){
-    toast.textContent = '⚠ Chưa cấu hình SHEET_WEBHOOK_URL — deploy Apps Script rồi dán URL /exec vào biến SHEET_WEBHOOK_URL ở đầu thẻ <script> trong file HTML này.';
-    toast.classList.add('show');
+    status.className = 'submit-status error';
+    status.textContent = '⚠ Chưa cấu hình kết nối Google Sheet — liên hệ admin.';
     return;
   }
-  const btn = document.getElementById('submit-sheet-btn');
-  const original = btn.textContent;
-  btn.disabled = true; btn.textContent = '⏳ Đang gửi...';
+  status.className = 'submit-status pending';
+  status.textContent = '⏳ Đang gửi kết quả đánh giá...';
   try{
     const res = await fetch(SHEET_WEBHOOK_URL, {
       method: 'POST',
@@ -761,70 +688,15 @@ async function submitToSheet(){
     });
     const json = await res.json();
     if(!res.ok || json.status !== 'ok') throw new Error(json.error || ('HTTP ' + res.status));
-    toast.textContent = '✓ Đã ghi thẳng vào tab Submissions trên Google Sheet.';
-    toast.classList.add('show');
+    status.className = 'submit-status ok';
+    status.textContent = '✓ Đã gửi kết quả đánh giá thành công. Cảm ơn bạn!';
   }catch(e){
-    toast.textContent = '✗ Gửi thất bại (' + e.message + ') — dùng nút Sao chép/Tải file bên dưới để lưu thủ công.';
-    toast.classList.add('show');
-  }finally{
-    btn.disabled = false; btn.textContent = original;
+    status.className = 'submit-status error';
+    status.innerHTML = '✗ Gửi thất bại, vui lòng thử lại.<button class="retry-btn" onclick="submitToSheet()">Thử lại</button>';
   }
-}
-
-async function copyRow(){
-  if(!currentRow) return;
-  const line = toTsvLine(currentRow);
-  const toast = document.getElementById('export-toast');
-  try{
-    await navigator.clipboard.writeText(line);
-    toast.textContent = '✓ Đã sao chép — dán trực tiếp vào cuối tab Submissions.';
-    toast.classList.add('show');
-    document.getElementById('copy-fallback').classList.remove('show');
-  }catch(e){
-    const fb = document.getElementById('copy-fallback');
-    fb.value = line;
-    fb.classList.add('show');
-    fb.focus(); fb.select();
-    toast.textContent = 'Trình duyệt chặn sao chép tự động — bấm Ctrl/Cmd+C trong ô bên dưới.';
-    toast.classList.add('show');
-  }
-}
-
-function ensureDownloads(){
-  if(!window.claude || !window.claude.downloads){
-    alert('Tính năng tải file chưa sẵn sàng trên trang này.');
-    return false;
-  }
-  return true;
-}
-
-async function downloadRowCsv(){
-  if(!currentRow || !ensureDownloads()) return;
-  const csv = '﻿' + toCsvLine(CSV_HEADERS) + '\n' + toCsvLine(currentRow) + '\n';
-  const name = (currentRow[2] || 'member').replace(/[^\p{L}\p{N}]+/gu,'_');
-  try{
-    await window.claude.downloads.save({ filename: `soe-eval-${name}-${Date.now()}.txt`, data: csv });
-    const toast = document.getElementById('export-toast');
-    toast.textContent = '✓ Đã tải file — mở Google Sheet, File → Import → Upload, chọn dấu phẩy làm ký tự phân tách.';
-    toast.classList.add('show');
-  }catch(e){}
-}
-
-async function downloadAllCsv(){
-  if(!ensureDownloads()) return;
-  const log = loadLog();
-  if(!log.length){ alert('Chưa có lượt nộp nào trên trình duyệt này.'); return; }
-  const csv = '﻿' + [CSV_HEADERS, ...log].map(toCsvLine).join('\n') + '\n';
-  try{
-    await window.claude.downloads.save({ filename: `soe-eval-all-${Date.now()}.txt`, data: csv });
-    const toast = document.getElementById('export-toast');
-    toast.textContent = '✓ Đã tải file — mở Google Sheet, File → Import → Upload, chọn dấu phẩy làm ký tự phân tách.';
-    toast.classList.add('show');
-  }catch(e){}
 }
 
 let lastRadar = null;
-renderLog(loadLog());
 renderSections();
 updateProgress();
 window.addEventListener('resize', ()=>{
