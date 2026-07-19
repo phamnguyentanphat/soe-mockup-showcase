@@ -97,7 +97,7 @@
 
   .eyebrow{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
   h1{font-family:var(--serif);font-size:28px;font-weight:600;letter-spacing:-.01em;text-wrap:balance;margin:0 0 .4rem}
-  .subtitle{font-size:14px;color:var(--text-muted);max-width:56ch;margin-bottom:1.75rem}
+  .subtitle{font-size:14px;color:var(--text-muted);margin-bottom:1.75rem}
 
   .legend-bar{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:1.75rem;padding:.85rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:10px}
   .legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted)}
@@ -105,7 +105,6 @@
 
   .evaluatee-field{margin-bottom:12px}
   .fixed-value{width:100%;font-family:var(--sans);font-size:13px;padding:9px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface-2);color:var(--text-muted)}
-  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.75rem}
   .info-field label{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-faint);display:block;margin-bottom:5px}
   .info-field .req{color:var(--warn);text-transform:none;letter-spacing:0}
   .info-field select,.info-field input[type="text"]{width:100%;font-family:var(--sans);font-size:13px;padding:9px 10px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface);color:var(--text)}
@@ -199,9 +198,9 @@
   .radar-wrap{width:100%;display:flex;justify-content:center}
   canvas{max-width:100%}
 
-  .submit-status{border-top:1px solid var(--border);margin-top:1.4rem;padding-top:1.2rem;text-align:center;font-size:13.5px;font-weight:600}
+  .submit-status{border-top:1px solid var(--border);margin-top:1.4rem;padding-top:1.4rem;text-align:center;font-size:13.5px;font-weight:600}
   .submit-status.pending{color:var(--text-muted)}
-  .submit-status.ok{color:var(--s3)}
+  .submit-status.ok{color:var(--s3);font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.5;max-width:56ch;margin-left:auto;margin-right:auto}
   .submit-status.error{color:var(--s1)}
   .retry-btn{margin-left:8px;font-family:var(--sans);font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:8px;border:1px solid var(--border-strong);background:var(--surface-2);color:var(--text);cursor:pointer}
   .retry-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
@@ -210,7 +209,6 @@
     .dim-grid{grid-template-columns:repeat(4,1fr)}
   }
   @media(max-width:600px){
-    .info-grid{grid-template-columns:1fr 1fr}
     .dim-grid{grid-template-columns:1fr}
     .criterion-row{grid-template-columns:1fr}
     .scale-btns{margin-top:2px}
@@ -243,21 +241,19 @@
     <input type="hidden" id="evaluatee" value="phucdao">
   </div>
 
-  <div class="info-grid">
-    <div class="info-field" id="field-evaluator"><label>Người đánh giá <span class="req">— bắt buộc</span></label>
-      <select id="evaluator"><option value="">— Chọn —</option><option value="kimha">kimha</option><option value="khuevo">khuevo</option><option value="linhnguyen10">linhnguyen10</option><option value="hanhvu">hanhvu</option><option value="vydiep">vydiep</option><option value="phatpham">phatpham</option><option value="nienluong">nienluong</option></select>
-      <div class="field-warn">⚠ Cần chọn người đánh giá</div>
-    </div>
-    <div class="info-field" id="field-vibe"><label>Cảm nhận tổng thể <span class="req">— bắt buộc</span></label>
-      <select id="vibe"><option value="">— Chọn —</option><option value="impressive">Ấn tượng — để lại dấu ấn mạnh</option><option value="interesting">Thú vị — nhớ được 1-2 điểm</option><option value="neutral">Bình thường — không có gì nổi bật</option><option value="dull">Nhạt — khó nhớ</option></select>
-      <div class="field-warn">⚠ Cần chọn cảm nhận tổng thể</div>
-    </div>
+  <div class="info-field" id="field-evaluator" style="margin-bottom:1.75rem"><label>Người đánh giá <span class="req">— bắt buộc</span></label>
+    <select id="evaluator"><option value="">— Chọn —</option><option value="kimha">kimha</option><option value="khuevo">khuevo</option><option value="linhnguyen10">linhnguyen10</option><option value="hanhvu">hanhvu</option><option value="vydiep">vydiep</option><option value="phatpham">phatpham</option><option value="nienluong">nienluong</option></select>
+    <div class="field-warn">⚠ Cần chọn người đánh giá</div>
   </div>
 
   <div id="sections-container"></div>
 
   <div class="section-card" style="border-left-color:var(--border-strong)">
     <div class="section-title" style="color:var(--text-muted);font-size:14px;margin-bottom:.9rem">Nhận xét tổng thể</div>
+    <div class="info-field" style="margin-bottom:14px" id="field-vibe"><label>Cảm nhận tổng thể <span class="req">— bắt buộc</span></label>
+      <select id="vibe"><option value="">— Chọn —</option><option value="impressive">Ấn tượng — để lại dấu ấn mạnh</option><option value="interesting">Thú vị — nhớ được 1-2 điểm</option><option value="neutral">Bình thường — không có gì nổi bật</option><option value="dull">Nhạt — khó nhớ</option></select>
+      <div class="field-warn">⚠ Cần chọn cảm nhận tổng thể</div>
+    </div>
     <div style="margin-bottom:14px" id="field-strengths">
       <div class="field-label">Điểm mạnh nổi bật <span class="req" style="text-transform:none">— bắt buộc</span></div>
       <textarea class="open-text" id="strengths" placeholder="Hành vi cụ thể member làm tốt…"></textarea>
@@ -646,6 +642,7 @@ function calcResult() {
   drawRadar(document.getElementById('radarChart'), lastRadar.labels, lastRadar.values, lastRadar.colors);
 
   currentRow = buildRow(info, dimAvgs, total, tier, passed);
+  currentEvaluator = info.evaluator;
   document.getElementById('submit-status').className = 'submit-status';
   document.getElementById('submit-status').textContent = '';
 
@@ -669,6 +666,7 @@ function buildRow(info, dimAvgs, total, tier, passed){
 }
 
 let currentRow = null;
+let currentEvaluator = null;
 
 async function submitToSheet(){
   if(!currentRow) return;
@@ -689,7 +687,7 @@ async function submitToSheet(){
     const json = await res.json();
     if(!res.ok || json.status !== 'ok') throw new Error(json.error || ('HTTP ' + res.status));
     status.className = 'submit-status ok';
-    status.textContent = '✓ Đã gửi kết quả đánh giá thành công. Cảm ơn bạn!';
+    status.textContent = `✓ Cảm ơn ${currentEvaluator} rất nhiều vì đã dành thời gian đánh giá tận tâm cho phucdao! Những nhận xét chi tiết của bạn là đóng góp quý giá, giúp phucdao tiến bộ hơn mỗi ngày.`;
   }catch(e){
     status.className = 'submit-status error';
     status.innerHTML = '✗ Gửi thất bại, vui lòng thử lại.<button class="retry-btn" onclick="submitToSheet()">Thử lại</button>';
